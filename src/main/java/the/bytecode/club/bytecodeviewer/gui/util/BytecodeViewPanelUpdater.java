@@ -280,11 +280,10 @@ public class BytecodeViewPanelUpdater implements Runnable
 
                             RSyntaxTextArea area = switch (i)
                             {
-                                case 0: yield viewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
-                                case 1: yield viewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
-                                case 2: yield viewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
-                                default:
-                                     yield null;
+                                case 0 -> viewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
+                                case 1 -> viewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
+                                case 2 -> viewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
+                                default -> null;
                             };
 
                             if (area != null)
@@ -363,13 +362,12 @@ public class BytecodeViewPanelUpdater implements Runnable
 
                     RSyntaxTextArea area = switch (bytecodeViewPanel.panelIndex)
                     {
-                        case 0: yield viewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
+                        case 0 -> viewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
 
-                        case 1: yield viewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
+                        case 1 -> viewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
 
-                        case 2: yield viewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
-                        default:
-                             yield null;
+                        case 2 -> viewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
+                        default -> null;
                     };
 
                     if (area != null)
