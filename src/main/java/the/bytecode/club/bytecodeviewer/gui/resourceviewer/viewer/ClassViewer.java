@@ -201,13 +201,12 @@ public class ClassViewer extends ResourceViewer
     {
         RSyntaxTextArea area = switch (paneId)
         {
-            case 0: yield classViewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
+            case 0 -> classViewer.bytecodeViewPanel1.updateThread.updateUpdaterTextArea;
 
-            case 1: yield classViewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
+            case 1 -> classViewer.bytecodeViewPanel2.updateThread.updateUpdaterTextArea;
 
-            case 2: yield classViewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
-            default:
-                 yield null;
+            case 2 -> classViewer.bytecodeViewPanel3.updateThread.updateUpdaterTextArea;
+            default -> null;
         };
 
         if (area != null)
