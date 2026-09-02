@@ -216,9 +216,9 @@ public class AllatoriStringDecrypter extends Plugin
         AbstractInsnNode insn = null, removeInsn;
         for (AbstractInsnNode i : iList.toArray())
         {
-            if (i instanceof MethodInsnNode)
+            if (i instanceof MethodInsnNode node)
             {
-                MethodInsnNode methodi = ((MethodInsnNode) i);
+                MethodInsnNode methodi = node;
 
                 if ("currentThread".equals(methodi.name)) // find code form this instruction
                 {
@@ -233,9 +233,9 @@ public class AllatoriStringDecrypter extends Plugin
 
         while (insn != null)
         {
-            if (insn instanceof MethodInsnNode)
+            if (insn instanceof MethodInsnNode node1)
             {
-                MethodInsnNode methodi = ((MethodInsnNode) insn);
+                MethodInsnNode methodi = node1;
 
                 if ("hashCode".equals(methodi.name)) // to this instruction
                     break;
@@ -304,7 +304,7 @@ public class AllatoriStringDecrypter extends Plugin
             getContentPane().add(textField);
             textField.setColumns(10);
 
-            btnNewButton.addActionListener(arg0 ->
+            btnNewButton.addActionListener(_ ->
             {
                 PluginManager.runPlugin(new the.bytecode.club.bytecodeviewer.plugin.preinstalled.AllatoriStringDecrypter(textField.getText()));
                 dispose();
