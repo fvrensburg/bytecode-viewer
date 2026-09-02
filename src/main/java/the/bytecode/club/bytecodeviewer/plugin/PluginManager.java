@@ -127,7 +127,7 @@ public final class PluginManager
         PluginLaunchStrategy strategy = LAUNCH_STRATEGIES.get(ext);
 
         if (strategy == null)
-            throw new RuntimeException(String.format("No launch strategy for extension %s (%s)",
+            throw new RuntimeException("No launch strategy for extension %s (%s)".formatted(
                 ext, f.getAbsolutePath()));
 
         Plugin p = strategy.run(f);

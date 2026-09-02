@@ -126,40 +126,25 @@ public class InstructionPrinter implements Opcodes
     public String printInstruction(AbstractInsnNode ain)
     {
         String line = "";
-        if (ain instanceof VarInsnNode)
-            line = printVarInsnNode((VarInsnNode) ain);
-        else if (ain instanceof IntInsnNode)
-            line = printIntInsnNode((IntInsnNode) ain);
-        else if (ain instanceof FieldInsnNode)
-            line = printFieldInsnNode((FieldInsnNode) ain);
-        else if (ain instanceof MethodInsnNode)
-            line = printMethodInsnNode((MethodInsnNode) ain);
-        else if (ain instanceof LdcInsnNode)
-            line = printLdcInsnNode((LdcInsnNode) ain);
-        else if (ain instanceof InsnNode)
-            line = printInsnNode((InsnNode) ain);
-        else if (ain instanceof JumpInsnNode)
-            line = printJumpInsnNode((JumpInsnNode) ain);
-        else if (ain instanceof LineNumberNode)
-            line = printLineNumberNode((LineNumberNode) ain);
-        else if (ain instanceof LabelNode)
-            line = printLabelNode((LabelNode) ain);
-        else if (ain instanceof TypeInsnNode)
-            line = printTypeInsnNode((TypeInsnNode) ain);
-        else if (ain instanceof FrameNode)
-            line = printFrameNode((FrameNode) ain);
-        else if (ain instanceof IincInsnNode)
-            line = printIincInsnNode((IincInsnNode) ain);
-        else if (ain instanceof TableSwitchInsnNode)
-            line = printTableSwitchInsnNode((TableSwitchInsnNode) ain);
-        else if (ain instanceof LookupSwitchInsnNode)
-            line = printLookupSwitchInsnNode((LookupSwitchInsnNode) ain);
-        else if (ain instanceof InvokeDynamicInsnNode)
-            line = printInvokeDynamicInsNode((InvokeDynamicInsnNode) ain);
-        else if (ain instanceof MultiANewArrayInsnNode)
-            line = printMultiANewArrayInsNode((MultiANewArrayInsnNode) ain);
-        else
-            line += "UNADDED OPCODE: " + nameOpcode(ain.getOpcode()) + " " + ain;
+        switch (ain) {
+            case VarInsnNode node -> line = printVarInsnNode(node);
+            case IntInsnNode node -> line = printIntInsnNode(node);
+            case FieldInsnNode node -> line = printFieldInsnNode(node);
+            case MethodInsnNode node -> line = printMethodInsnNode(node);
+            case LdcInsnNode node -> line = printLdcInsnNode(node);
+            case InsnNode node -> line = printInsnNode(node);
+            case JumpInsnNode node -> line = printJumpInsnNode(node);
+            case LineNumberNode node -> line = printLineNumberNode(node);
+            case LabelNode node -> line = printLabelNode(node);
+            case TypeInsnNode node -> line = printTypeInsnNode(node);
+            case FrameNode node -> line = printFrameNode(node);
+            case IincInsnNode node -> line = printIincInsnNode(node);
+            case TableSwitchInsnNode node -> line = printTableSwitchInsnNode(node);
+            case LookupSwitchInsnNode node -> line = printLookupSwitchInsnNode(node);
+            case InvokeDynamicInsnNode node -> line = printInvokeDynamicInsNode(node);
+            case MultiANewArrayInsnNode node -> line = printMultiANewArrayInsNode(node);
+            default -> line += "UNADDED OPCODE: " + nameOpcode(ain.getOpcode()) + " " + ain;
+        }
 
         return line;
     }
@@ -209,7 +194,7 @@ public class InstructionPrinter implements Opcodes
             if (Type.getType(min.desc) != null)
                 desc = Type.getType(min.desc).getClassName();
         }
-        catch (java.lang.AssertionError e)
+        catch (java.lang.AssertionError _)
         {
             //e.printStackTrace();
         }
@@ -306,13 +291,13 @@ public class InstructionPrinter implements Opcodes
                 if (desc.equals("null"))
                     desc = tin.desc;
             }
-            catch (java.lang.ArrayIndexOutOfBoundsException ignored)
+            catch (java.lang.ArrayIndexOutOfBoundsException _)
             {
 
             }
             return nameOpcode(tin.getOpcode()) + " " + desc;
         }
-        catch (Exception e)
+        catch (Exception _)
         {
             return nameOpcode(tin.getOpcode()) + " " + tin.desc;
         }
@@ -411,30 +396,22 @@ public class InstructionPrinter implements Opcodes
 
     private String printFrameObject(Object obj)
     {
-        if (obj instanceof LabelNode)
-            return "label [L" + resolveLabel((LabelNode) obj) + "]";
+        if (obj instanceof LabelNode node)
+            return "label [L" + resolveLabel(node) + "]";
 
-        if (obj instanceof Integer)
+        if (obj instanceof Integer integer)
         {
-            switch ((int) obj)
+            return switch (integer)
             {
-                case 0:
-                    return "top";
-                case 1:
-                    return "int";
-                case 2:
-                    return "float";
-                case 3:
-                    return "double";
-                case 4:
-                    return "long";
-                case 5:
-                    return "null";
-                case 6:
-                    return "uninitialized this";
-                default:
-                    return "unknown";
-            }
+                case 0 -> "top";
+                case 1 -> "int";
+                case 2 -> "float";
+                case 3 -> "double";
+                case 4 -> "long";
+                case 5 -> "null";
+                case 6 -> "uninitialized this";
+                default -> "unknown";
+            };
         }
 
         if (obj instanceof String)
@@ -445,23 +422,16 @@ public class InstructionPrinter implements Opcodes
 
     private String nameFrameType(int type)
     {
-        switch (type)
+        return switch (type)
         {
-            case F_NEW:
-                return "    f_new";
-            case F_FULL:
-                return "    f_full";
-            case F_APPEND:
-                return "    f_append";
-            case F_CHOP:
-                return "    f_chop";
-            case F_SAME:
-                return "    f_same";
-            case F_SAME1:
-                return "    f_same1";
-            default:
-                return "    f_unknown" + type;
-        }
+            case F_NEW -> "    f_new";
+            case F_FULL -> "    f_full";
+            case F_APPEND -> "    f_append";
+            case F_CHOP -> "    f_chop";
+            case F_SAME -> "    f_same";
+            case F_SAME1 -> "    f_same1";
+            default -> "    f_unknown" + type;
+        };
     }
 
     protected String nameOpcode(int opcode)
